@@ -1,0 +1,52 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+Devanagari:wght@400;500;600;700&family=Hind:wght@400;500;600;700&family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-stone-50 text-stone-900;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .hindi-text {
+    font-family: 'Noto Serif Devanagari', serif;
+    line-height: 1.8;
+  }
+
+  .hindi-heading {
+    font-family: 'Noto Serif Devanagari', serif;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .english-text {
+    font-family: 'Crimson Text', serif;
+    line-height: 1.6;
+  }
+
+  .sans-text {
+    font-family: 'Hind', sans-serif;
+  }
+
+  .poem-content {
+    font-family: 'Noto Serif Devanagari', serif;
+    font-size: 1.25rem;
+    line-height: 1.9;
+    white-space: pre-line;;
+  }
+
+  .link-hover {
+    @apply transition-all duration-300 hover:text-rose-800;
+  }
+
+  .card-hover {
+    @apply transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+  }
+}
