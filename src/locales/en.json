@@ -1,0 +1,95 @@
+{
+  "common": {
+    "loading": "Loading...",
+    "readMore": "Read More",
+    "back": "Back",
+    "share": "Share",
+    "all": "All",
+    "search": "Search",
+    "filter": "Category"
+  },
+  "header": {
+    "tagline": "Poetry that isn't true, but feels true",
+    "home": "Home",
+    "poems": "Poems",
+    "authors": "Authors",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "footer": {
+    "description": "Poetry that isn't true, but feels true. Where words lie, but emotions are real.",
+    "pages": "Pages",
+    "contact": "Contact",
+    "contactUs": "Contact Us",
+    "copyright": "© 2025 FakeKavi.com | All Rights Reserved"
+  },
+  "home": {
+    "title": "FakeKavi",
+    "tagline": "Poetry that isn't true, but feels true",
+    "subtitle": "Here every word is an imagination, every emotion an exaggeration. But within this lie lies life's truth.",
+    "readAllPoems": "Read All Poems",
+    "featuredPoems": "Featured Poems",
+    "recentPoems": "Recent Poems"
+  },
+  "poems": {
+    "title": "All Poems",
+    "subtitle": "Every creation between truth and lie",
+    "searchPlaceholder": "Search poems or poets...",
+    "noResults": "No poems found"
+  },
+  "singlePoem": {
+    "notFound": "Poem not found",
+    "viewAllPoems": "View all poems",
+    "backToPoems": "Back to all poems",
+    "relatedPoems": "You might also like"
+  },
+  "authors": {
+    "title": "Our Poets",
+    "subtitle": "Those who write lies so beautifully that they seem true",
+    "noAuthors": "No authors yet"
+  },
+  "authorProfile": {
+    "notFound": "Author not found",
+    "viewAllAuthors": "View all authors",
+    "backToAuthors": "Back to all authors",
+    "poemsCount": "poems published",
+    "authorPoems": "Poems by",
+    "noPoems": "No poems published yet"
+  },
+  "about": {
+    "title": "About FakeKavi",
+    "subtitle": "Where the difference between truth and lie disappears",
+    "whoWeAre": "Who are we?",
+    "whoWeAreText1": "FakeKavi is a digital home for poems that aren't true, but feel true. Here every word is an exaggeration, every emotion an imagination, and every line a satire. But within this lie lies life's real truth.",
+    "whoWeAreText2": "We believe that poetry is not just an expression of emotions, but also a means to see life from a new perspective. On FakeKavi, you'll find creations that will make you laugh, cry, make you think, and sometimes surprise you.",
+    "creativity": "Creativity",
+    "creativityDesc": "Every poem is a new experiment",
+    "emotions": "Emotions",
+    "emotionsDesc": "Real feeling even in lies",
+    "literature": "Literature",
+    "literatureDesc": "Beyond tradition, new dimensions",
+    "ourMission": "Our Mission",
+    "missionText1": "FakeKavi's mission is to give Hindi literature a new dimension. We want to free poetry from the burden of seriousness and make it accessible and entertaining for everyone.",
+    "missionText2": "Here you'll find experiments that might not be acceptable in traditional literature, but express the ironies of modern life in the best way.",
+    "quote": "True poetry is not what states the truth,\nbut what makes lies so beautiful\nthat they seem true."
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Share your poem, suggestions or feedback",
+    "shareYourThoughts": "Share your thoughts",
+    "shareYourThoughtsText": "Do you also have a \"fake\" poem? Or want to say something about FakeKavi? We are eager to hear from you. Contact us through the form below.",
+    "name": "Name",
+    "email": "Email",
+    "subject": "Subject",
+    "message": "Message",
+    "namePlaceholder": "Your name",
+    "subjectPlaceholder": "What do you want to write about?",
+    "messagePlaceholder": "Write your message here...",
+    "sendMessage": "Send Message",
+    "successMessage": "Thank you! Your message has been received. We will contact you soon.",
+    "submitPoem": "Submit your poem",
+    "submitPoemText": "If you are also a \"fake poet\" and want to get your creations published on FakeKavi, send your poem through the form above. We read every submission carefully and publish selected poems on the site.",
+    "submitPoemNote": "Note: Please send only your original creations. Copying or literary theft is not encouraged."
+  }
+}
+

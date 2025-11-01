@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
-import { supabase } from '../lib/supabase';
-import type { Author, PoemWithDetails } from '../lib/database.types';
+import { getAuthorBySlug, getPoemsByAuthor, type Author, type PoemWithDetails } from '../data/poems';
 import { User, ArrowLeft, Calendar } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface AuthorProfileProps {
   slug: string;
@@ -9,66 +8,23 @@ interface AuthorProfileProps {
 }
 
 export function AuthorProfile({ slug, onNavigate }: AuthorProfileProps) {
-  const [author, setAuthor] = useState<Author | null>(null);
-  const [poems, setPoems] = useState<PoemWithDetails[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    loadAuthorData();
-  }, [slug]);
-
-  async function loadAuthorData() {
-    try {
-      const { data: authorData, error: authorError } = await supabase
-        .from('authors')
-        .select('*')
-        .eq('slug', slug)
-        .maybeSingle();
-
-      if (authorError) throw authorError;
-
-      if (authorData) {
-        setAuthor(authorData);
-
-        const { data: poemsData, error: poemsError } = await supabase
-          .from('poems')
-          .select(`
-            *,
-            author:authors(*),
-            category:categories(*)
-          `)
-          .eq('author_id', authorData.id)
-          .order('published_at', { ascending: false });
-
-        if (poemsError) throw poemsError;
-        setPoems(poemsData as unknown as PoemWithDetails[]);
-      }
-    } catch (error) {
-      console.error('Error loading author data:', error);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-pulse text-rose-900 sans-text text-lg">लोड हो रहा है...</div>
-      </div>
-    );
-  }
+  const { t } = useLanguage();
+  const author = getAuthorBySlug(slug);
+  const poems = author ? getPoemsByAuthor(author.id).sort((a, b) => 
+    new Date(b.published_at).getTime() - new Date(a.published_at).getTime()
+  ) : [];
 
   if (!author) {
     return (
       <div className="min-h-screen py-12">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
-            <h1 className="text-3xl hindi-heading text-stone-900 mb-4">कवि नहीं मिले</h1>
+            <h1 className="text-3xl hindi-heading text-stone-900 mb-4">{t('authorProfile.notFound')}</h1>
             <button
               onClick={() => onNavigate('/authors')}
               className="text-rose-900 sans-text hover:underline"
             >
-              सभी कवि देखें
+              {t('authorProfile.viewAllAuthors')}
             </button>
           </div>
         </div>
@@ -84,7 +40,7 @@ export function AuthorProfile({ slug, onNavigate }: AuthorProfileProps) {
           className="flex items-center gap-2 text-stone-700 hover:text-rose-900 sans-text font-medium mb-8 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          सभी कवियों पर वापस जाएँ
+          {t('authorProfile.backToAuthors')}
         </button>
 
         <div className="bg-white rounded-lg shadow-lg p-8 md:p-12 mb-12">
@@ -105,14 +61,14 @@ export function AuthorProfile({ slug, onNavigate }: AuthorProfileProps) {
                 {author.name}
               </h1>
               <p className="text-lg hindi-text text-stone-700 leading-relaxed">
-                {author.bio || 'कोई परिचय उपलब्ध नहीं है।'}
+                {author.bio || ''}
               </p>
             </div>
           </div>
 
           <div className="pt-6 border-t border-stone-200">
             <p className="sans-text text-stone-600">
-              <span className="font-semibold">{poems.length}</span> कविताएँ प्रकाशित
+              <span className="font-semibold">{poems.length}</span> {t('authorProfile.poemsCount')}
             </p>
           </div>
         </div>
@@ -120,7 +76,7 @@ export function AuthorProfile({ slug, onNavigate }: AuthorProfileProps) {
         {poems.length > 0 ? (
           <section>
             <h2 className="text-3xl font-bold hindi-heading text-stone-900 mb-8">
-              {author.name} की रचनाएँ
+              {t('authorProfile.authorPoems')} {author.name}
             </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {poems.map((poem) => (
@@ -131,7 +87,7 @@ export function AuthorProfile({ slug, onNavigate }: AuthorProfileProps) {
         ) : (
           <div className="text-center py-12">
             <p className="text-lg hindi-text text-stone-600">
-              अभी तक कोई कविता प्रकाशित नहीं हुई है
+              {t('authorProfile.noPoems')}
             </p>
           </div>
         )}
@@ -146,9 +102,15 @@ interface PoemCardProps {
 }
 
 function PoemCard({ poem, onNavigate }: PoemCardProps) {
+  const { language } = useLanguage();
+  const useRoman = language === 'en';
+  const displayTitle = useRoman ? poem.titleRoman : poem.title;
+  const displayExcerpt = useRoman ? poem.excerptRoman : poem.excerpt;
+  
   function formatDate(dateString: string) {
     const date = new Date(dateString);
-    return new Intl.DateTimeFormat('hi-IN', {
+    const locale = language === 'en' ? 'en-US' : 'hi-IN';
+    return new Intl.DateTimeFormat(locale, {
       day: 'numeric',
       month: 'long',
       year: 'numeric'
@@ -160,19 +122,19 @@ function PoemCard({ poem, onNavigate }: PoemCardProps) {
       onClick={() => onNavigate(`/poem/${poem.slug}`)}
       className="bg-white rounded-lg shadow-md p-6 cursor-pointer card-hover"
     >
-      <h3 className="text-2xl font-semibold hindi-heading text-stone-900 mb-3 hover:text-rose-900 transition-colors">
-        {poem.title}
+      <h3 className={`text-2xl font-semibold text-stone-900 mb-3 hover:text-rose-900 transition-colors ${useRoman ? 'sans-text' : 'hindi-heading'}`}>
+        {displayTitle}
       </h3>
       <div className="flex items-center gap-2 text-sm text-stone-600 mb-4 sans-text">
         <Calendar className="w-4 h-4" />
         <span>{formatDate(poem.published_at)}</span>
       </div>
-      <p className="hindi-text text-stone-700 line-clamp-3">
-        {poem.excerpt}
+      <p className={`text-stone-700 line-clamp-3 ${useRoman ? 'sans-text' : 'hindi-text'}`}>
+        {displayExcerpt}
       </p>
       {poem.category && (
         <span className="inline-block mt-4 px-3 py-1 bg-rose-100 text-rose-900 text-xs sans-text font-medium rounded-full">
-          {poem.category.name}
+          {useRoman ? poem.category.name_en : poem.category.name}
         </span>
       )}
     </article>

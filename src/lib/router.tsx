@@ -2,11 +2,21 @@ import { useState, useEffect } from 'react';
 
 export function useRouter() {
   const [route, setRoute] = useState(() => {
+    // Initialize hash if missing
+    if (!window.location.hash || window.location.hash === '#') {
+      window.location.hash = '/';
+    }
     const hash = window.location.hash.slice(1) || '/';
     return hash;
   });
 
   useEffect(() => {
+    // Ensure hash is set on mount
+    if (!window.location.hash || window.location.hash === '#') {
+      window.location.hash = '/';
+      setRoute('/');
+    }
+
     const handleHashChange = () => {
       setRoute(window.location.hash.slice(1) || '/');
     };

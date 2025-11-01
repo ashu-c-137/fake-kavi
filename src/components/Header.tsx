@@ -1,5 +1,7 @@
 import { BookOpen, Menu, X } from 'lucide-react';
 import { useState } from 'react';
+import { useLanguage } from '../contexts/LanguageContext';
+import { LanguageToggle } from './LanguageToggle';
 
 interface HeaderProps {
   currentPath: string;
@@ -8,13 +10,14 @@ interface HeaderProps {
 
 export function Header({ currentPath, onNavigate }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { t } = useLanguage();
 
   const navItems = [
-    { path: '/', label: 'होम' },
-    { path: '/poems', label: 'कविताएँ' },
-    { path: '/authors', label: 'कवि' },
-    { path: '/about', label: 'परिचय' },
-    { path: '/contact', label: 'संपर्क' },
+    { path: '/', label: t('header.home') },
+    { path: '/poems', label: t('header.poems') },
+    { path: '/authors', label: t('header.authors') },
+    { path: '/about', label: t('header.about') },
+    { path: '/contact', label: t('header.contact') },
   ];
 
   const isActive = (path: string) => {
@@ -36,12 +39,12 @@ export function Header({ currentPath, onNavigate }: HeaderProps) {
                 FakeKavi
               </h1>
               <p className="text-xs hindi-text text-stone-600 -mt-1">
-                कविता जो सच्ची नहीं, पर लगती है सच्ची
+                {t('header.tagline')}
               </p>
             </div>
           </button>
 
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-6">
             {navItems.map((item) => (
               <button
                 key={item.path}
@@ -55,6 +58,7 @@ export function Header({ currentPath, onNavigate }: HeaderProps) {
                 {item.label}
               </button>
             ))}
+            <LanguageToggle />
           </nav>
 
           <button
@@ -85,6 +89,9 @@ export function Header({ currentPath, onNavigate }: HeaderProps) {
                 {item.label}
               </button>
             ))}
+            <div className="px-4 pt-2">
+              <LanguageToggle />
+            </div>
           </nav>
         </div>
       )}

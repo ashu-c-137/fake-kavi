@@ -1,10 +1,13 @@
 import { BookOpen, Mail } from 'lucide-react';
+import { useLanguage } from '../contexts/LanguageContext';
 
 interface FooterProps {
   onNavigate: (path: string) => void;
 }
 
 export function Footer({ onNavigate }: FooterProps) {
+  const { t } = useLanguage();
+
   return (
     <footer className="bg-stone-900 text-stone-300 mt-20">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -15,20 +18,19 @@ export function Footer({ onNavigate }: FooterProps) {
               <h3 className="text-xl font-bold hindi-heading text-white">FakeKavi</h3>
             </div>
             <p className="hindi-text text-sm leading-relaxed">
-              कविता जो सच्ची नहीं, पर लगती है सच्ची।
-              जहाँ शब्द झूठ बोलते हैं, और भावना सच्ची होती है।
+              {t('footer.description')}
             </p>
           </div>
 
           <div>
-            <h4 className="font-semibold sans-text text-white mb-4">पृष्ठ</h4>
+            <h4 className="font-semibold sans-text text-white mb-4">{t('footer.pages')}</h4>
             <ul className="space-y-2 sans-text text-sm">
               <li>
                 <button
                   onClick={() => onNavigate('/')}
                   className="link-hover"
                 >
-                  होम
+                  {t('header.home')}
                 </button>
               </li>
               <li>
@@ -36,7 +38,7 @@ export function Footer({ onNavigate }: FooterProps) {
                   onClick={() => onNavigate('/poems')}
                   className="link-hover"
                 >
-                  कविताएँ
+                  {t('header.poems')}
                 </button>
               </li>
               <li>
@@ -44,7 +46,7 @@ export function Footer({ onNavigate }: FooterProps) {
                   onClick={() => onNavigate('/authors')}
                   className="link-hover"
                 >
-                  कवि
+                  {t('header.authors')}
                 </button>
               </li>
               <li>
@@ -52,27 +54,27 @@ export function Footer({ onNavigate }: FooterProps) {
                   onClick={() => onNavigate('/about')}
                   className="link-hover"
                 >
-                  परिचय
+                  {t('header.about')}
                 </button>
               </li>
             </ul>
           </div>
 
           <div>
-            <h4 className="font-semibold sans-text text-white mb-4">संपर्क</h4>
+            <h4 className="font-semibold sans-text text-white mb-4">{t('footer.contact')}</h4>
             <button
               onClick={() => onNavigate('/contact')}
               className="flex items-center gap-2 text-sm sans-text link-hover"
             >
               <Mail className="w-4 h-4" />
-              हमसे संपर्क करें
+              {t('footer.contactUs')}
             </button>
           </div>
         </div>
 
         <div className="mt-8 pt-8 border-t border-stone-800 text-center">
           <p className="text-sm sans-text text-stone-400">
-            © 2025 FakeKavi.com | सर्वाधिकार सुरक्षित
+            {t('footer.copyright')}
           </p>
         </div>
       </div>
