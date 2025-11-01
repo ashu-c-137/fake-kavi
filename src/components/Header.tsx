@@ -28,13 +28,13 @@ export function Header({ currentPath, onNavigate }: HeaderProps) {
   return (
     <header className="bg-white shadow-sm sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-20">
+        <div className="flex justify-between items-center h-20 gap-4">
           <button
             onClick={() => onNavigate('/')}
-            className="flex items-center gap-3 group"
+            className="flex items-center gap-3 group flex-shrink-0"
           >
             <BookOpen className="w-8 h-8 text-rose-900 group-hover:text-rose-700 transition-colors" />
-            <div className="text-left">
+            <div className="text-left hidden sm:block">
               <h1 className="text-2xl font-bold hindi-heading text-rose-900 group-hover:text-rose-700 transition-colors">
                 FakeKavi
               </h1>
@@ -44,7 +44,7 @@ export function Header({ currentPath, onNavigate }: HeaderProps) {
             </div>
           </button>
 
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden lg:flex items-center gap-6 flex-1 ml-8">
             {navItems.map((item) => (
               <button
                 key={item.path}
@@ -58,20 +58,25 @@ export function Header({ currentPath, onNavigate }: HeaderProps) {
                 {item.label}
               </button>
             ))}
-            <LanguageToggle />
           </nav>
 
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 text-stone-700 hover:text-rose-900"
-          >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+          <div className="flex items-center gap-3 flex-shrink-0">
+            <div>
+              <LanguageToggle />
+            </div>
+
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="lg:hidden p-2 text-stone-700 hover:text-rose-900 transition-colors"
+            >
+              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
         </div>
       </div>
 
       {mobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-stone-200">
+        <div className="lg:hidden bg-white border-t border-stone-200">
           <nav className="px-4 py-4 space-y-3">
             {navItems.map((item) => (
               <button
@@ -89,9 +94,6 @@ export function Header({ currentPath, onNavigate }: HeaderProps) {
                 {item.label}
               </button>
             ))}
-            <div className="px-4 pt-2">
-              <LanguageToggle />
-            </div>
           </nav>
         </div>
       )}
