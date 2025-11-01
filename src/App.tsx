@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useRouter, parseRoute } from './lib/router';
 import { Header } from './components/Header';
 import { Footer } from './components/Footer';
@@ -12,6 +13,10 @@ import { Contact } from './pages/Contact';
 function App() {
   const { route, navigate } = useRouter();
   const { path, params } = parseRoute(route);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [route]);
 
   function renderPage() {
     switch (path) {
